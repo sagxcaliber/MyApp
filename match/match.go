@@ -49,3 +49,19 @@ func decideTurn(playerA, playerB *Player) (*Player, *Player) {
 	}
 	return playerB, playerA
 }
+
+// attack performs an attack from the attacker to the defender
+func attack(attacker, defender *Player) {
+	attackRoll := RollDie()
+	defendRoll := RollDie()
+
+	attackDamage := attacker.Attack * attackRoll
+	defendStrength := defender.Strength * defendRoll
+
+	damage := attackDamage - defendStrength
+	if damage > 0 {
+		defender.Health -= damage
+	}
+	fmt.Printf("%s attacks (%d) and %s defends (%d) - Damage: %d, %s Health: %d\n",
+		attacker.Name, attackRoll, defender.Name, defendRoll, damage, defender.Name, defender.Health)
+}
