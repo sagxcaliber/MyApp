@@ -1,6 +1,7 @@
 package match
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
 	"time"
@@ -8,15 +9,18 @@ import (
 
 // Player represents a player in the arena
 type Player struct {
-	Name    string
-	Health  int
+	Name     string
+	Health   int
 	Strength int
 	Attack   int
 }
 
-// NewPlayer creates a new player with given attributes
-func NewPlayer(name string, health, strength, attack int) *Player {
-	return &Player{Name: name, Health: health, Strength: strength, Attack: attack}
+// NewPlayer creates a new player with given attributes and validates them
+func NewPlayer(name string, health, strength, attack int) (*Player, error) {
+	if health <= 0 || strength <= 0 || attack <= 0 {
+		return nil, errors.New("all attributes must be positive integers")
+	}
+	return &Player{Name: name, Health: health, Strength: strength, Attack: attack}, nil
 }
 
 // RollDie simulates rolling a six-sided die
@@ -24,7 +28,6 @@ func RollDie() int {
 	rand.Seed(time.Now().UnixNano())
 	return rand.Intn(6) + 1
 }
-
 
 // Fight simulates a fight between two players and returns the result
 func Fight(playerA, playerB *Player) string {
