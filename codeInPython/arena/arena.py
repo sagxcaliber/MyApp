@@ -18,3 +18,32 @@ def new_player(*, name: str, health: int, strength: int, attack: int):
         create_player = Player()
         create_player.set(name, health, strength, attack)
         return create_player.get()
+
+
+def turn_decide(player_a: dict, player_b: dict):
+    if player_a.get('health') < player_b.get('health'):
+        return player_a, player_b
+    else:
+        player_b, player_a
+
+def rollDie():
+    ...
+
+
+def attack(attacker, defender):
+    attackerRoll = ''
+    defendRoll = ''
+
+
+def fight(player_a: dict, player_b: dict) -> str:
+    while player_a.get('health') > 0 and player_b.get('health') > 0:
+        # here we need to add a turn decider function
+        attacker, defender = turn_decide(player_a, player_b)
+        # Now as we now the attacker and defender we need to make attacks
+        attack(attacker, defender)
+        if defender.get('health') <= 0:
+            return "{} wins!!".format(attacker.get('name'))
+        if attacker.get('health') <= 0:
+            return "{} wins!!".format(defender.get('name'))
+
+    return "Its a draw"
